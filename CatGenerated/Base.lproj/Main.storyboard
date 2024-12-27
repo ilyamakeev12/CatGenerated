@@ -65,6 +65,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="APm-2F-cXz"/>
                     <connections>
+                        <outlet property="TextField" destination="hO0-uN-3aS" id="aYn-C4-Ze0"/>
                         <outlet property="textLabel" destination="Em7-IH-QmL" id="3G0-E6-x99"/>
                         <segue destination="OPF-lo-yQ5" kind="show" identifier="showCatImageSegue" id="vNQ-U9-Arb"/>
                     </connections>
@@ -81,22 +82,32 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="catImage" translatesAutoresizingMaskIntoConstraints="NO" id="GjB-Ea-pzt">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="catImage" translatesAutoresizingMaskIntoConstraints="NO" id="GjB-Ea-pzt">
                                 <rect key="frame" x="75" y="373" width="240" height="98"/>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ULj-pT-c4i">
+                                <rect key="frame" x="20" y="419" width="350" height="32.333333333333314"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Uvz-a3-RnW"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="GjB-Ea-pzt" firstAttribute="leading" secondItem="Uvz-a3-RnW" secondAttribute="leading" constant="75" id="6Jt-vO-edM"/>
                             <constraint firstItem="GjB-Ea-pzt" firstAttribute="top" secondItem="Uvz-a3-RnW" secondAttribute="top" constant="282" id="Rq9-DS-cer"/>
+                            <constraint firstItem="Uvz-a3-RnW" firstAttribute="trailing" secondItem="ULj-pT-c4i" secondAttribute="trailing" constant="20" id="k2K-xW-CsU"/>
+                            <constraint firstItem="ULj-pT-c4i" firstAttribute="leading" secondItem="Uvz-a3-RnW" secondAttribute="leading" constant="20" id="nyE-sX-G0b"/>
                             <constraint firstItem="Uvz-a3-RnW" firstAttribute="trailing" secondItem="GjB-Ea-pzt" secondAttribute="trailing" constant="75" id="oCp-Pl-9mz"/>
                             <constraint firstItem="GjB-Ea-pzt" firstAttribute="centerY" secondItem="4yU-oy-GBQ" secondAttribute="centerY" id="zbF-lz-hh3"/>
+                            <constraint firstItem="ULj-pT-c4i" firstAttribute="top" secondItem="Uvz-a3-RnW" secondAttribute="top" constant="328" id="zob-Xn-WyQ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="6BV-Ah-HnQ"/>
                     <connections>
                         <outlet property="catImageView" destination="GjB-Ea-pzt" id="tL5-sk-iTr"/>
+                        <outlet property="textLabel" destination="ULj-pT-c4i" id="baf-ke-DgF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="48L-es-CL8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

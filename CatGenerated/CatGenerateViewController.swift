@@ -10,77 +10,76 @@ import UIKit
 final class CatGenerateViewController: UIViewController {
     @IBOutlet weak var textLabel: UILabel!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var TextField: UITextField!
     @IBOutlet weak var catImageView: UIImageView!
 
     override func viewDidLoad() {
-        super.viewDidLoad()
+            super.viewDidLoad()
 
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapView))
+            let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapView))
+            view.addGestureRecognizer(gestureRecognizer)
 
-        view.addGestureRecognizer(gestureRecognizer)
-
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification , object:nil)
-
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification , object:nil)
-    }
-
-    @objc func keyboardWillShow(notification: NSNotification) {
-       let keyboardHeight = (notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.height
-
-    }
-
-    @objc func keyboardWillHide(notification: NSNotification) {
-       let keyboardHeight = (notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.height
-
-    }
-
-    @objc
-    private func didTapView() {
-        view.endEditing(true)
-    }
-
-    @IBAction func didTapCatGenerateButton(_ sender: Any) {
-       downloadCat()
-    }
-
-
-    private func downloadCat() {
-        guard let url = URL(string: "https://cataas.com/cat") else {
-            return
+            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         }
 
+        @objc func keyboardWillShow(notification: NSNotification) {
+            let keyboardHeight = (notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.height
+        }
 
-        print(Thread.current)
-        let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+        @objc func keyboardWillHide(notification: NSNotification) {
+
+        }
+
+        @objc
+        private func didTapView() {
+            view.endEditing(true)
+        }
+
+        @IBAction func didTapCatGenerateButton(_ sender: Any) {
+            downloadCat()
+        }
+
+        private func downloadCat() {
+            guard let url = URL(string: "https://cataas.com/cat") else {
+                return
+            }
+
             print(Thread.current)
-            guard let data = data else {
-                return
-            }
-
-            DispatchQueue.main.async { [weak self] in
+            let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
                 print(Thread.current)
-                self?.imgData = data
-                self?.performSegue(withIdentifier: "showCatImageSegue", sender: self)
-            }
-        }
+                guard let data = data else {
+                    return
+                }
 
-        task.resume()
-    }
-
-    private var imgData: Data?
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        super.prepare(for: segue, sender: sender)
-
-        if segue.identifier == "showCatImageSegue" {
-            guard
-                let viewController: SeconddViewController = segue.destination as? SeconddViewController,
-                let imgData = imgData
-            else {
-                return
+                DispatchQueue.main.async { [weak self] in
+                    print(Thread.current)
+                    self?.imgData = data
+                    self?.performSegue(withIdentifier: "showCatImageSegue", sender: self)
+                }
             }
 
-            viewController.setInput(with: SeconddVCInput(imageData: imgData))
+            task.resume()
+        }
+
+        private var imgData: Data?
+        private var userInputText: String?
+
+        override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+            super.prepare(for: segue, sender: sender)
+
+            if segue.identifier == "showCatImageSegue" {
+                guard
+                    let viewController: SeconddViewController = segue.destination as? SeconddViewController,
+                    let imgData = imgData
+                else {
+                    return
+                }
+
+
+                let inputText = TextField.text ?? ""
+                let input = SeconddVCInput(imageData: imgData, userText: inputText)
+                viewController.setInput(with: input)
+            }
         }
     }
-}
